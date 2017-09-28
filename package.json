@@ -1,0 +1,19 @@
+{
+  "name": "currencyapp",
+  "version": "1.0.0",
+  "description": "Modern currency application allowing for foreign exchange transactions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/konradpardyak/CurrencyApp.git"
+  },
+  "author": "Konrad Pardyak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/konradpardyak/CurrencyApp/issues"
+  },
+  "homepage": "https://github.com/konradpardyak/CurrencyApp#readme"
+}

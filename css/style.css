@@ -142,3 +142,18 @@
     font-weight: 700;
   }
 }
+@media screen and (min-width: 736px){
+  .box{
+    float: left;
+  }
+  .box::after{
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    clear: both;
+  }
+  .left, .right{
+    width: 50%;
+  }
+}

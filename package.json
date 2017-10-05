@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/konradpardyak/CurrencyApp/issues"
   },
-  "homepage": "https://github.com/konradpardyak/CurrencyApp#readme"
+  "homepage": "https://github.com/konradpardyak/CurrencyApp#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "webpack": "^3.6.0"
+  }
 }

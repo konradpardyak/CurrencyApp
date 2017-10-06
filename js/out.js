@@ -95,6 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
             _this.value = Math.floor(parseFloat(exInput.value) * 100);
           }
           transactions.refresh(_this.value);
+          impTransaction.show();
         };
       }
     }]);
@@ -110,15 +111,16 @@ document.addEventListener("DOMContentLoaded", function () {
     _createClass(Transactions, [{
       key: "add",
       value: function add() {
+        var _this2 = this;
+
         var sub = document.querySelector("input[name='add']");
-        var self = this;
 
         sub.addEventListener("click", function (event) {
           event.preventDefault();
           var name = document.querySelector("input[name='name']");
           var amount = document.querySelector("input[name='amount']");
           if (name.value != "" && amount.value != "") {
-            self.addToList(name.value, amount.value);
+            _this2.addToList(name.value, amount.value);
             name.value = "";
             amount.value = "";
           }
@@ -151,7 +153,11 @@ document.addEventListener("DOMContentLoaded", function () {
         var newLi = listElementsLi.length - 1;
         button.addEventListener("click", function () {
           listElementsLi[newLi].parentNode.removeChild(listElementsLi[newLi]);
+          sum.refresh();
+          impTransaction.show();
         });
+        sum.refresh();
+        impTransaction.show();
       }
     }, {
       key: "refresh",
@@ -162,14 +168,82 @@ document.addEventListener("DOMContentLoaded", function () {
         for (var i = 0; i < listLength; i++) {
           listElementsEUR[i].innerText = (newValue * Math.floor(parseFloat(listElementsUSD[i].innerText) * 100) / 10000).toFixed(2) + "EUR";
         }
+        sum.refresh();
       }
     }]);
 
     return Transactions;
   }();
 
+  var Sum = function () {
+    function Sum() {
+      _classCallCheck(this, Sum);
+    }
+
+    _createClass(Sum, [{
+      key: "refresh",
+      value: function refresh() {
+        var listElementsUSD = document.querySelectorAll(".transactionList .liUSD");
+        var listElementsEUR = document.querySelectorAll(".transactionList .liEUR");
+        var listLength = listElementsUSD.length;
+        var sumUSD = document.querySelector(".sum .sumUSD");
+        var sumEUR = document.querySelector(".sum .sumEUR");
+        var USD = 0;
+        var EUR = 0;
+        for (var i = 0; i < listLength; i++) {
+          USD += parseFloat(listElementsUSD[i].innerText) * 100;
+          EUR += parseFloat(listElementsEUR[i].innerText) * 100;
+        }
+        sumUSD.innerText = (USD / 100).toFixed(2) + "USD";
+        sumEUR.innerText = (EUR / 100).toFixed(2) + "EUR";
+      }
+    }]);
+
+    return Sum;
+  }();
+
+  var ImpTransaction = function () {
+    function ImpTransaction() {
+      _classCallCheck(this, ImpTransaction);
+    }
+
+    _createClass(ImpTransaction, [{
+      key: "show",
+      value: function show() {
+        var listElementsUSD = document.querySelectorAll(".transactionList .liUSD");
+        var listElementsEUR = document.querySelectorAll(".transactionList .liEUR");
+        var listElementsName = document.querySelectorAll(".transactionList .liName");
+        var topName = document.querySelector("#importantTransaction .topName");
+        var topUSD = document.querySelector("#importantTransaction .topUSD");
+        var topEUR = document.querySelector("#importantTransaction .topEUR");
+        var listLength = listElementsUSD.length;
+        var maxUSD = 0;
+        var indexOfMaxI = 0;
+        if (listLength > 0) {
+          for (var i = 0; i < listLength; i++) {
+            if (parseFloat(listElementsUSD[i].innerText) > maxUSD) {
+              maxUSD = parseFloat(listElementsUSD[i].innerText);
+              indexOfMaxI = i;
+            }
+          }
+          topName.innerText = listElementsName[indexOfMaxI].innerText;
+          topUSD.innerText = listElementsUSD[indexOfMaxI].innerText;
+          topEUR.innerText = listElementsEUR[indexOfMaxI].innerText;
+        } else {
+          topName.innerText = "Add transaction to see";
+          topUSD.innerText = "0USD";
+          topEUR.innerText = "0EUR";
+        }
+      }
+    }]);
+
+    return ImpTransaction;
+  }();
+
   var exchange = new Exchange();
   var transactions = new Transactions();
+  var sum = new Sum();
+  var impTransaction = new ImpTransaction();
 
   transactions.add();
   exchange.watch();
